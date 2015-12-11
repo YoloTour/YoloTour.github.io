@@ -1,0 +1,190 @@
+body { margin: 0; padding: 0; overflow: hidden; font-family: helvetica, Times, serif;}
+canvas { width: 100%; height: 100%; display: block;}
+
+#textfield{
+	z-index: 1;
+	position: absolute;
+	font-size: 20px;
+	font-style: bold;
+	color: white;
+    margin-left: auto;
+    margin-right: auto;
+	padding: 10px;
+	margin: 10px;
+    width: 115px;
+	height: 50px;
+	background: rgba(0,0,0,0.9);
+	opacity: 0.6;
+	border: 3px solid white;
+	border-radius: 8px;
+	color: white;
+	outline: none;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.0);
+	top: 0px;
+	left: 0px;
+
+}
+
+#antaldagar{
+	width:110px;
+	padding:0px;
+	margin:0px;
+}
+
+#genTour_btn{
+	z-index: 1;
+	position: absolute;
+	font-size: 20px;
+	font-style: bold;
+	color: white;
+    margin-left: auto;
+    margin-right: auto;
+	padding: 10px;
+	margin: 10px;
+    width: 140px;
+	height: 80px;
+	background: rgba(0,0,0,0.9);
+	opacity: 0.6;
+	border: 3px solid white;
+	border-radius: 8px;
+	color: white;
+	outline: none;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+	top: 80px;
+	left: 0px;
+
+}
+
+#hideTour_btn{
+	z-index: 1;
+	position: absolute;
+	font-size: 20px;
+	font-style: bold;
+	color: white;
+    margin-left: auto;
+    margin-right: auto;
+	padding: 10px;
+	margin: 10px;
+    width: 140px;
+	height: 80px;
+	background: rgba(0,0,0,0.9);
+	opacity: 0.6;
+	border: 3px solid white;
+	border-radius: 8px;
+	color: white;
+	outline: none;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+	top: 165px;
+	left: 0px;
+}
+
+#day_btn{
+	z-index: 1;
+	position: absolute;
+	font-size: 20px;
+	font-style: bold;
+	color: white;
+    margin-left: auto;
+    margin-right: auto;
+	padding: 10px;
+	margin: 10px;
+    width: 140px;
+	height: 100px;
+	background: rgba(0,0,0,0.9);
+	opacity: 0.6;
+	border: 3px solid white;
+	border-radius: 4px;
+	color: white;
+	outline: none;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+	top: 0px;
+	right: 0px;
+
+}
+
+
+
+#genTour_btn:hover{
+background: rgba(200,0,0,0.9);
+}
+
+#hideTour_btn:hover{
+background: rgba(200,0,0,0.9);
+}
+
+#image_HUD{
+	position: absolute;
+	width:100%;
+	height:100%;
+	padding:0px;
+	margin:0px;
+	opacity: 0.0;
+}
+
+#meadow_img{
+	position: absolute;
+	bottom: -20px;
+	width: 100%;
+	min-width: 1500px;
+	margin:0px;
+	padding: 0px;
+	opacity: 1.0;
+}
+
+#sun_img{
+	z-index: 0;
+	position: absolute;
+	top: -250px;
+	left: -220px;
+	margin:0px;
+	padding: 0px;
+}
+
+#cloud_img{
+	z-index: 0;
+	position: absolute;
+	top: -100px;
+	right: -50px;
+	margin:0px;
+	padding: 0px;
+	opacity: 0.5;
+}
+
+.clock.flip-clock-wrapper{
+	z-index: 1;
+	position: absolute;
+	bottom: -30px;
+	right: -860px;
+	margin:0px;
+	padding: 0px;
+	opacity: 0.8;
+}
+
+.clock{
+	margin:0;
+	padding:0;
+	zoom: 0.4;
+-moz-transform: scale(0.4);
+
+}
+
+/*2 & 3 == dagar*/
+.flip-clock-divider.days,
+.flip-clock-divider.hours,
+.clock ul:nth-child(6),
+.clock ul:nth-child(7),
+.clock ul:nth-child(8),
+.clock ul:nth-child(9),
+.clock ul:nth-child(10),
+.clock ul:nth-child(11),
+.clock ul:nth-child(12),
+.flip-clock-divider.minutes
+
+{
+    display: none;
+}
+
+#sound{
+	position: absolute;
+	display:none;
+}
