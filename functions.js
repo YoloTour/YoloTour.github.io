@@ -237,6 +237,24 @@ function loadModels(){
 
 			});
 
+			loader.load("obj/2016.js", 
+
+				function(geometry) {
+
+					var objectMaterial = new THREE.MeshBasicMaterial({map: textureLoader.load("textures/rainbow.png"), transparent: true, opacity: 0.7 });
+
+					objectMaterial.side = THREE.DoubleSide;
+					object = new THREE.Mesh(geometry, objectMaterial);
+				//	object.rotation.z = -0.07;
+					var scale = 0.6;
+					object.scale.x = scale;
+					object.scale.y = scale;
+					object.scale.z = scale;
+					object.translateY(-7.5);
+					sceneGraph.add(object);
+
+			});
+
 			fire_material = new THREE.ShaderMaterial( {
 
 			    uniforms: { 
@@ -431,14 +449,14 @@ function loadBasics(){
 }
 
 function toggleDayNight(){
-	console.log(date.getHours());
+	//console.log(date.getHours());
 
 	if(day){
 		renderer.setClearColor ( 0x000000, 1 );
 		visibility(nightSky, true);
 		visibility(daySky, false);
 		day = false;
-		pointLight.color.setHSL( 0.8, 0.8, 0.8 );
+		pointLight.color.setHSL( 0.7, 0.7, 0.7 );
 
 	}else{
 		resetCloudOpacity();
@@ -470,10 +488,16 @@ function resetCloudOpacity() {
 
 function addLights(){
 
-	pointLight = new THREE.PointLight( 0xaaffff, 1.5, 0 );
+	//Light from bus fire
+	pointLight = new THREE.PointLight( 0x779999, 1.5, 0 );
 	pointLight.color.setHSL( 0,0,0 );
 	pointLight.position.set( 0, 0, 0 );
 	sceneGraph.add( pointLight );
+
+	fireworkLight = new THREE.PointLight( 0x779999, 1.5, 0 );
+	fireworkLight.color.setRGB( 0.3, 0, 0.3);
+	fireworkLight.position.set( 0, 0, 0 );
+	sceneGraph.add( fireworkLight );
 
 	var cabinLight = new THREE.PointLight( 0xaaffff, 1.5, 0 );
 	cabinLight.color.setHSL( 0.1,0.1,0.1 );
@@ -495,48 +519,8 @@ function visibility(object, bool){
 	object.traverse(function(child) {child.visible = bool;});
 }
 
-function onDocumentMouseDown( event ) {
-	event.preventDefault();
-	mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
-	mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
-	raycaster.setFromCamera( mouse, camera );
-	intersects = raycaster.intersectObjects( clickableObjects );
 
-	var dist = distance(camera.position, new THREE.Vector3(0,0,0));
-	if(intersects.length > 0 && dist < 5) {
-		if(intersects[0].object == btn1Mesh) 
-			toggleDayNight();
-		else if(intersects[0].object == btn2Mesh){
-			if(gomorronPlay){
-				gomorron.pause();
-				gomorronPlay = false;
-			}else{
-				gomorron.play();
-				gomorronPlay = true;
-			}
-		}
-			
-	}
 
-	if(intersects.length > 0) {
-		if(intersects[0].object == btn3Mesh){
-			soundDice = Math.floor(Math.random() * 3) + 1;
-			switch(soundDice) {
-			    case 1:
-			        busSound1.play();
-			        break;
-			    case 2:
-			        busSound2.play();
-			        break;
-			    case 3:
-			        busSound3.play();
-			        break;
-
-			}
-		}
-	}
-
-}
 
 function markTextfield() {
 	document.getElementById("antaldagar").select();
@@ -544,4 +528,21 @@ function markTextfield() {
 
 function distance(first, second) {
 	return Math.pow((Math.pow(Math.abs(first.x - second.x),3) + Math.pow(Math.abs(first.y - second.y),3) + Math.pow(Math.abs(first.z - second.z),3)),1/3);
+}
+
+function soundBtn(){
+	if(soundOn){
+		soundOn = false;
+		gomorron.pause(); 
+		catmas.pause(); 
+		busSound1.pause(); 
+		busSound2.pause(); 
+		busSound3.pause(); 
+		fireworkSound11.pause(); 
+		fireworkSound21.pause();
+		document.getElementById("soundImg").src="textures/soundOff.png";
+	}else{
+		soundOn = true;
+		document.getElementById("soundImg").src="textures/soundOn.png";
+	}
 }
