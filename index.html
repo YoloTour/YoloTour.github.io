@@ -40,8 +40,8 @@
 		<form id="textfield"> Antal dagar:<input type="text" onclick="markTextfield()" id="antaldagar" value="10" 
 			onkeydown="if (event.keyCode == 13) { event.preventDefault(); drawRoute(); }" ></form>
 		<button id="hideTour_btn" onclick="hideRoute()">Dölj Tour</button>
-		<h1 id="nedrakning">Nedräkningen har börjat!</h1>
-
+		<!--<h1 id="nedrakning">Nedräkningen har börjat!</h1>-->
+		
 		<button id="soundBtn" onclick="soundBtn()"><img id="soundImg" src="textures/soundOn.png"/></button>
 
 
@@ -294,7 +294,7 @@ void main() {
 		    var flareGroup = new THREE.Object3D;;
 		    var inExplosion = false;
 		    var particleCount = 40;
-		    var flareCount =200;
+		    var flareCount =400;
 		    var pCount, fCount;
 		    var flareToMove = 0;
 		    var particleInitSpeed = 0.15;
@@ -476,7 +476,7 @@ void main() {
 	
 
 		</script>
-
+<!--
 		<div id="clock" class="clock" style="margin:2em;"> </div>
 		
 		<script type="text/javascript">
@@ -500,7 +500,7 @@ void main() {
 				});
 			});
 		</script>
-
+-->
 
 
 		
