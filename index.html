@@ -2,23 +2,517 @@
 <html>
 	<head>
 		<title> Yolo Tour </title>
-
+<<<<<<< HEAD
+=======
+		<meta charset="utf-8">
+		<link rel="icon" href="favicon2.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/flipclock.css">
+		<link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+>>>>>>> origin/master
 	</head>
 
 	<body>
 
+<<<<<<< HEAD
 	Ny hemsida:
+=======
+		<!--Bibliotek-->
+		<script src="js/three.min.js"></script>
+
+		<script src="js/TrackballControls.js"></script>
+		<script src="js/OrbitControls.js"></script>
+		<script src="js/Detector.js"></script>
+		<script src="js/Projector.js"></script>
+		
+		<script src="js/MTLLoader.js"></script>
+		<script src="js/DDSLoader.js"></script>
+		<script src="js/OBJMTLLoader.js"></script>
+		<script src="js/OBJLoader.js"></script>
+		
+		<!-- clock -->
+		<script src="js/flipclock.js"></script>
+		
+
+		<!--Egna script-->
+		<script src="functions.js"></script>
+		<script src="eventListeners.js"></script>
+		<script src="js/fireworks/loadSprites.js"></script>
+		<script src="js/fireworks/spriteMovement.js"></script>
+
+		
+		<button id="genTour_btn" onclick="drawRoute()">Generera Tour</button>
+		<form id="textfield"> Antal dagar:<input type="text" onclick="markTextfield()" id="antaldagar" value="10" 
+			onkeydown="if (event.keyCode == 13) { event.preventDefault(); drawRoute(); }" ></form>
+		<button id="hideTour_btn" onclick="hideRoute()">Dölj Tour</button>
+		<!--<h1 id="nedrakning">Nedräkningen har börjat!</h1>-->
+		
+		<button id="soundBtn" onclick="soundBtn()"><img id="soundImg" src="textures/soundOn.png"/></button>
+
+
+		<audio id="sound"><source src="sounds/hatkarlek.mp3" type="audio/mpeg"></audio>
+		<audio id="catmas"><source src="sounds/catmas.mp3" type="audio/mpeg"></audio>
+		<audio id="busSound1"><source src="sounds/busSound7.mp3" type="audio/mpeg"></audio>
+		<audio id="busSound2"><source src="sounds/busSound8.mp3" type="audio/mpeg"></audio>
+		<audio id="busSound3"><source src="sounds/busSound8.mp3" type="audio/mpeg"></audio>
+		<audio id="fireworkSound11"><source src="sounds/firework11.mp3" type="audio/mpeg"></audio>
+		<audio id="fireworkSound21"><source src="sounds/firework21.mp3" type="audio/mpeg"></audio>
+
+		<div id="image_HUD">
+			<img id="meadow_img" src="textures/meadow.png">
+			<img id="sun_img" src="textures/sun.png">
+			<img id="cloud_img" src="textures/cloud_white.png">
+		</div>
+
+
+
+
+	
+
+		<!--NEW SHADERS-->
+    <script type="x-shader/x-vertex" id="vertexShader">
+		vec3 mod289(vec3 x)
+		{
+		  return x - floor(x * (1.0 / 289.0)) * 289.0;
+		}
+
+		vec4 mod289(vec4 x)
+		{
+		  return x - floor(x * (1.0 / 289.0)) * 289.0;
+		}
+
+		vec4 permute(vec4 x)
+		{
+		  return mod289(((x*34.0)+1.0)*x);
+		}
+
+		vec4 taylorInvSqrt(vec4 r)
+		{
+		  return 1.79284291400159 - 0.85373472095314 * r;
+		}
+
+		vec3 fade(vec3 t) {
+		  return t*t*t*(t*(t*6.0-15.0)+10.0);
+		}
+
+		
+
+		// Classic Perlin noise, periodic variant
+		float pnoise(vec3 P, vec3 rep)
+		{
+		  vec3 Pi0 = mod(floor(P), rep); // Integer part, modulo period
+		  vec3 Pi1 = mod(Pi0 + vec3(1.0), rep); // Integer part + 1, mod period
+		  Pi0 = mod289(Pi0);
+		  Pi1 = mod289(Pi1);
+		  vec3 Pf0 = fract(P); // Fractional part for interpolation
+		  vec3 Pf1 = Pf0 - vec3(1.0); // Fractional part - 1.0
+		  vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
+		  vec4 iy = vec4(Pi0.yy, Pi1.yy);
+		  vec4 iz0 = Pi0.zzzz;
+		  vec4 iz1 = Pi1.zzzz;
+
+		  vec4 ixy = permute(permute(ix) + iy);
+		  vec4 ixy0 = permute(ixy + iz0);
+		  vec4 ixy1 = permute(ixy + iz1);
+
+		  vec4 gx0 = ixy0 * (1.0 / 7.0);
+		  vec4 gy0 = fract(floor(gx0) * (1.0 / 7.0)) - 0.5;
+		  gx0 = fract(gx0);
+		  vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
+		  vec4 sz0 = step(gz0, vec4(0.0));
+		  gx0 -= sz0 * (step(0.0, gx0) - 0.5);
+		  gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+
+		  vec4 gx1 = ixy1 * (1.0 / 7.0);
+		  vec4 gy1 = fract(floor(gx1) * (1.0 / 7.0)) - 0.5;
+		  gx1 = fract(gx1);
+		  vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
+		  vec4 sz1 = step(gz1, vec4(0.0));
+		  gx1 -= sz1 * (step(0.0, gx1) - 0.5);
+		  gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+
+		  vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
+		  vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
+		  vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
+		  vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
+		  vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
+		  vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
+		  vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
+		  vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+
+		  vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
+		  g000 *= norm0.x;
+		  g010 *= norm0.y;
+		  g100 *= norm0.z;
+		  g110 *= norm0.w;
+		  vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
+		  g001 *= norm1.x;
+		  g011 *= norm1.y;
+		  g101 *= norm1.z;
+		  g111 *= norm1.w;
+
+		  float n000 = dot(g000, Pf0);
+		  float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
+		  float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
+		  float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
+		  float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
+		  float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
+		  float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
+		  float n111 = dot(g111, Pf1);
+
+		  vec3 fade_xyz = fade(Pf0);
+		  vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
+		  vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
+		  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
+		  return 2.2 * n_xyz;
+		}
+
+		// Include the Ashima code here!
+		 
+		varying vec2 vUv;
+		varying float noise;
+		uniform float time;
+
+		float turbulence( vec3 p ) {
+		    float w = 100.0;
+		    float t = -.5;
+		    for (float f = 1.0 ; f <= 10.0 ; f++ ){
+		        float power = pow( 2.0, f );
+		        t += abs( pnoise( vec3( power * p ), vec3( 10.0, 10.0, 10.0 ) ) / power );
+		    }
+		    return t;
+		}
+
+		void main() {
+
+		    vUv = uv;
+
+		    // add time to the noise parameters so it's animated
+		    noise = 7.0 *  -.40 * turbulence( .5 * normal + time );
+		    float b = 1.0 * pnoise( 0.05 * position + vec3( 1.0 * time ), vec3( 100.0 ) );
+		    float displacement = - noise + b;
+		    
+
+		    vec3 newPosition = position + normal * displacement;
+		    gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+
+
+
+		}		
+    </script>
+
+    <script type="x-shader/x-vertex" id="fragmentShader">
+
+		varying vec2 vUv;
+			varying float noise;
+			uniform sampler2D tExplosion;
+
+			float random( vec3 scale, float seed ){
+			    return fract( sin( dot( gl_FragCoord.xyz + seed, scale ) ) * 43758.5453 + seed ) ;
+			}
+
+void main() {
+
+    // get a random offset
+    float r = .01 * random( vec3( 12.9898, 78.233, 151.7182 ), 0.0 );
+    // lookup vertically in the texture, using noise and offset
+    // to get the right RGB colour
+    vec2 tPos = vec2( 0, 1.0 - 1.6 * noise + r );
+    vec4 color = texture2D( tExplosion, tPos );
+
+    gl_FragColor = vec4( color.rgb, 1.0 );
+
+}
+    </script>
+>>>>>>> origin/master
 
 	<button onclick="myFunction()">HEMSIDA</button>
 		<!--Bibliotek-->
 		<script>
-
+<<<<<<< HEAD
 		function myFunction(){
 			window.open("https://www.ostgotatrafiken.se/");
 		}
+=======
+			//'use strict';
+			//Essentials
+			var renderer;
+			var scene;
+			var camera;
+			var controls;
+			var sceneGraph;
+
+			//Ambient
+			var stars = [];
+			var clouds = [];
+			var materials = []; //stars
+			var geometry;
+
+			//Objects
+			var sunSphere;
+			var insideSphere;
+			var busSphere;
+			var path;
+			var daBus;
+			var daFire = new THREE.Object3D;;
+			var fire_material;
+			var start = Date.now();
+			var time = Date.now();
+			var date = new Date();
+
+			//Groups
+			var busGroup;
+			var cloudGroup;
+			var lineGroup;
+			var mesh, mesh2;
+
+			var clickableObjects = [];
+			// click functionality
+			var raycaster = new THREE.Raycaster();		
+			var intersects = raycaster.intersectObjects( clickableObjects );	
+			var mouse = new THREE.Vector2();
+
+			var spotLight;
+			var day = true;
+			var showRoute = true;
+
+			var dayCounter;
+			var textureLoader = new THREE.TextureLoader();
+
+			var btn1Mesh;
+			var btn2Mesh;
+			var btn3Mesh;
+
+			var gomorron = document.getElementById("sound"); 
+			var catmas = document.getElementById("catmas"); 
+			var busSound1 = document.getElementById("busSound1"); 
+			var busSound2 = document.getElementById("busSound2"); 
+			var busSound3 = document.getElementById("busSound3"); 
+			var fireworkSound11 = document.getElementById("fireworkSound11"); 
+			var fireworkSound21 = document.getElementById("fireworkSound21"); 
+			var gomorronPlay = false;
+			var soundDice;
+			var soundOn = true;
+
+			//firework
+			var textureLoader = new THREE.TextureLoader();
+		    var mouseX, mouseY;
+		    var date = Date.now();
+		    var time2 = 0;
+
+			var particle, flare;
+		    var particles = [];
+		    var flares = [];
+		    var particleGroup = new THREE.Object3D;;
+		    var flareGroup = new THREE.Object3D;;
+		    var inExplosion = false;
+		    var particleCount = 40;
+		    var flareCount =400;
+		    var pCount, fCount;
+		    var flareToMove = 0;
+		    var particleInitSpeed = 0.15;
+		    var flareInitSpeed = 0.002;
+		    var rocketInitSpeed = 0.08;
+		    var gravity = -0.001;
+		    var age;
+		    var rocket;
+		    var fireworkCheck = false;
+
+
+
+			//Renderer
+			renderer = new THREE.WebGLRenderer({ antialiasing: true });
+
+			renderer.setClearColor ( 0xB3EAFF, 1 );
+	
+
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			//Scene
+			scene = new THREE.Scene();
+			scene.fog = new THREE.FogExp2( 0xB3EAFF, 0.007 );
+
+			//Camera
+			camera = new THREE.PerspectiveCamera( 60, window.innerWidth/window.innerHeight, 0.1, 10000 );
+			camera.position.z = 15;
+			scene.add(camera);
+
+			//Controls
+			controls = new THREE.TrackballControls( camera );
+			controls.zoomSpeed = 0.11;
+			controls.panSpeed = 0;
+			controls.rotateSpeed = 2.7;
+
+			/*controls = new THREE.OrbitControls( camera );
+			//controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
+			controls.enableDamping = true;
+			controls.dampingFactor = 0.1;
+			controls.enableZoom = true;
+			controls.rotateSpeed = 0.015;
+
+			*/
+			//Skapar en grupp som ska innehålla hela scengrafen
+			sceneGraph = new THREE.Object3D;
+			nightSky = new THREE.Object3D;
+			daySky = new THREE.Object3D;
+			btn1 = new THREE.Object3D;
+			btn2 = new THREE.Object3D;
+			btn3 = new THREE.Object3D;
+
+
+			//catmas.play();
+			
+			//Loading Meshes
+			loadBasics();
+			loadModels();
+			
+			//Loading Sprites
+			loadClouds();
+			loadStars();
+
+
+			sceneGraph.add(daySky);
+			sceneGraph.add(nightSky);
+
+			visibility(nightSky,false);
+
+
+			sunSphere.add(btn1);
+			sunSphere.add(btn2);
+			daBus.add(btn3);
+
+			scene.add(sceneGraph);
+			sceneGraph.rotation.x += 0.1; //Initial rotation
+
+
+			addLights();
+
+
+			//Fireworks
+
+			sceneGraph.add(particleGroup);
+    		sceneGraph.add(flareGroup);
+			loadParticles();
+		    loadFlares();
+		    loadRocket();
+
+			//---Idéer----
+			//Rita nästa route-linje med <90 grader från förra
+			//Ico
+			//Snygg panel för knappar och alternativ
+			//"höjdmätare" som visar hur många dagar det är kvar
+			//knapp som sätter på GOMORRON!
+			//Roliga sprites bland stjärnorna
+			//Musik med synkade rörelser
+			//Ansikten på planeter
+
+
+			//------ färdigt ------
+			//Buss som öser runt
+			//Moln
+			//Gräs-footer
+			//Hörnsol
+			//All rotation med Date-time
+			//Kunna ta bort genererad tour
+
+			
+
+			
+			toggleDayNight();
+
+   			 date = Date.now();
+
+			animate();
+
+			function animate() {
+
+				
+				time2 = (Date.now()-date)/1000;
+
+		        if(time2 > 2 && !inExplosion){
+
+		            initExplosion(rocket.sprite.position.x,rocket.sprite.position.y,rocket.sprite.position.z);
+		            rocket.sprite.material.opacity = 0;
+		            inExplosion = true;
+		        }else{
+		        	updateRocketPosition();
+		        	updateSpritePositions();
+		        }
+
+		        if(time2 > 5){
+		        	sendRocket();
+		        }
+
+
+
+				scene.updateMatrixWorld();
+				time = Date.now() / 1000;
+
+				fire_material.uniforms[ 'time' ].value = .00008 * ( Date.now() - start );
+				fire_material2.uniforms[ 'time' ].value = .00015 * ( Date.now() - start );
+				sunSphere.rotation.y = time/50;
+				cloudGroup.rotation.y = -time/100;
+				cloudGroup.rotation.x = -time/60;
+
+
+				busGroup.rotation.y =time/10;
+				daBus.rotation.x = Math.sin(time)/5;
+				daBus.rotation.z = Math.sin(time)/3;
+		
+				if(!day) {
+					setCloudOpacity();
+				}
+
+
+				//daFire.rotation.z = time;
+
+				daFire.translateX(0.001*Math.sin(5*time));
+				daFire.translateY(0.001*Math.sin(7*time));
+				daFire.translateZ(0.001*Math.sin(time));				
+				
+				//pointLight.position.copy( mesh.matrixWorld.getPosition() );
+				pointLight.position.setFromMatrixPosition( mesh.matrixWorld );
+				fireworkLight.position.setFromMatrixPosition( rocket.sprite.matrixWorld );
+				//Vector3.setFromMatrixPosition( matrix )
+				//pointLight.position.setFromMatrixPosition( mesh.position );
+
+
+				mesh.rotation.z = 1*time;
+				mesh2.rotation.z = -1.3*time;
+
+>>>>>>> origin/master
 
 
 		</script>
+<!--
+		<div id="clock" class="clock" style="margin:2em;"> </div>
+		
+		<script type="text/javascript">
+			var clock;
+
+			$(document).ready(function() {
+
+				// Grab the current date
+				var currentDate = new Date();
+
+				// Set some date in the future. In this case, it's always Jan 1
+				var futureDate  = new Date(currentDate.getFullYear() + 1, 5, 10, 15); //Klockan 15:00 på fredagen för avfärd
+
+				// Calculate the difference in seconds between the future and current date
+				var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+
+				// Instantiate a coutdown FlipClock
+				clock = $('.clock').FlipClock(diff, {
+					clockFace: 'DailyCounter',
+					countdown: true
+				});
+			});
+		</script>
+-->
+
+
 		
 
 	</body>
