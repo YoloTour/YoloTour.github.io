@@ -34,7 +34,7 @@ function onDocumentMouseDown( event ) {
 	if(intersects.length > 0 && dist < 5) {
 		if(intersects[0].object == btn1Mesh) 
 			toggleDayNight();
-		else if(intersects[0].object == btn2Mesh && soundOn){
+		else if(intersects[0].object == btn2Mesh){
 			if(gomorronPlay){
 				gomorron.pause();
 				gomorronPlay = false;
@@ -47,24 +47,27 @@ function onDocumentMouseDown( event ) {
 	}
 
 	if(intersects.length > 0) {
+		if(intersects[0].object == clickAirplane || intersects[0].object == clickPajala) {
+			window.location.href = "http://www.webbkameror.se/webbkameror/pajala/pajala_3_live.php";
+			console.log("hej mamma");
+		}
 		if(intersects[0].object == btn3Mesh){
 			
 			fireworkCheck = true;
 
 			soundDice = Math.floor(Math.random() * 3) + 1;
-			//console.log(soundDice);
-			if(soundOn){	
-				switch(soundDice) {
-				    case 1:
-				        busSound1.play();
-				        break;
-				    case 2:
-				        busSound2.play();
-				        break;
-				    case 3:
-				        busSound3.play();
-				        break;
-				}
+			console.log(soundDice);
+			switch(soundDice) {
+			    case 1:
+			        busSound1.play();
+			        break;
+			    case 2:
+			        busSound2.play();
+			        break;
+			    case 3:
+			        busSound3.play();
+			        break;
+
 			}
 		}
 	}

@@ -245,15 +245,34 @@ function loadModels(){
 
 					objectMaterial.side = THREE.DoubleSide;
 					object = new THREE.Mesh(geometry, objectMaterial);
-				//	object.rotation.z = -0.07;
-					var scale = 0.6;
-					object.scale.x = scale;
-					object.scale.y = scale;
-					object.scale.z = scale;
+					object.rotation.z = -0.07;
 					object.translateY(-7.5);
+					object.scale.set(0.7,0.7,0.7);
 					sceneGraph.add(object);
 
 			});
+			//Pajala AirPORT
+			loader2.load( "obj/pajala1.obj", "obj/pajala1.mtl", function(object){ 
+				
+
+				object.scale.set(0.6, 0.6, 0.6);
+				object.position.x = 16.5;
+				pajalaGroup.add(object);
+				
+			}, onProgress, onError);
+			
+			//Pajala AirPLANE
+			loader2.load( "obj/airplane.obj", "obj/airplane.mtl", function(object){ 
+				
+
+				object.scale.set(0.2, 0.2, 0.2);
+
+				object.rotation.x = -1;
+				pajalaPlaneGroup.rotation.y = 3.14/2.5;
+				pajalaPlaneGroup.add(object);
+				
+			}, onProgress, onError);
+
 
 			fire_material = new THREE.ShaderMaterial( {
 
@@ -384,12 +403,36 @@ function loadBasics(){
 			busMaterial.map = textureLoader.load('textures/rainbow.png');
 			busSphere = new THREE.Mesh( busGeometry, busMaterial );
 
+			//ADD PAJALA
+			pajalaGroup = new THREE.Object3D;
+			pajalaPortGroup = new THREE.Object3D;
+			pajalaPlaneGroup = new THREE.Object3D;
+
+			pajalaPortGroup.position.x = 16;
+			pajalaPlaneGroup.position.x = 3;;
+
+			pajalaGroup.add(pajalaPortGroup);
+			pajalaPortGroup.add(pajalaPlaneGroup);
+			clickPajala = new THREE.Mesh(new THREE.CubeGeometry(2,0.8,2.2), new THREE.MeshNormalMaterial());
+			clickAirplane = new THREE.Mesh(new THREE.CubeGeometry(1.5,0.7,0.7), new THREE.MeshNormalMaterial());
+			clickPajala.material.opacity = 0;
+			clickPajala.material.transparent = true;
+			clickAirplane.material.opacity = 0;
+			clickAirplane.material.transparent = true;
+
+			pajalaGroup.add(clickPajala);
+			clickPajala.position.x = 16;
+			pajalaPlaneGroup.add(clickAirplane);
+
+
 
 
 			//Add clickable objects
 			clickableObjects.push(btn1Mesh); //btn1Mesh
 			clickableObjects.push(btn2Mesh); //btn1Mesh
 			clickableObjects.push(btn3Mesh); //btn1Mesh
+			clickableObjects.push(clickPajala);
+			clickableObjects.push(clickAirplane);
 
 			//FIREEE	
 		    fire_material2 = new THREE.ShaderMaterial( {
@@ -436,6 +479,7 @@ function loadBasics(){
 			//busSphere.position.x = 10;
 			//busGroup.add( busSphere);
 			sceneGraph.add(busGroup);
+			sceneGraph.add(pajalaGroup);
 	
 
 			var pathGeometry = new THREE.TorusGeometry( 10, 0.1, 10, 100 );
@@ -449,14 +493,14 @@ function loadBasics(){
 }
 
 function toggleDayNight(){
-	//console.log(date.getHours());
+	console.log(date.getHours());
 
 	if(day){
 		renderer.setClearColor ( 0x000000, 1 );
 		visibility(nightSky, true);
 		visibility(daySky, false);
 		day = false;
-		pointLight.color.setHSL( 0.7, 0.7, 0.7 );
+		pointLight.color.setHSL( 0.8, 0.8, 0.8 );
 
 	}else{
 		resetCloudOpacity();
@@ -488,16 +532,10 @@ function resetCloudOpacity() {
 
 function addLights(){
 
-	//Light from bus fire
-	pointLight = new THREE.PointLight( 0x779999, 1.5, 0 );
+	pointLight = new THREE.PointLight( 0xaaffff, 1.5, 0 );
 	pointLight.color.setHSL( 0,0,0 );
 	pointLight.position.set( 0, 0, 0 );
 	sceneGraph.add( pointLight );
-
-	fireworkLight = new THREE.PointLight( 0x779999, 1.5, 0 );
-	fireworkLight.color.setRGB( 0.3, 0, 0.3);
-	fireworkLight.position.set( 0, 0, 0 );
-	sceneGraph.add( fireworkLight );
 
 	var cabinLight = new THREE.PointLight( 0xaaffff, 1.5, 0 );
 	cabinLight.color.setHSL( 0.1,0.1,0.1 );
@@ -520,29 +558,10 @@ function visibility(object, bool){
 }
 
 
-
-
 function markTextfield() {
 	document.getElementById("antaldagar").select();
 }
 
 function distance(first, second) {
 	return Math.pow((Math.pow(Math.abs(first.x - second.x),3) + Math.pow(Math.abs(first.y - second.y),3) + Math.pow(Math.abs(first.z - second.z),3)),1/3);
-}
-
-function soundBtn(){
-	if(soundOn){
-		soundOn = false;
-		gomorron.pause(); 
-		catmas.pause(); 
-		busSound1.pause(); 
-		busSound2.pause(); 
-		busSound3.pause(); 
-		fireworkSound11.pause(); 
-		fireworkSound21.pause();
-		document.getElementById("soundImg").src="textures/soundOff.png";
-	}else{
-		soundOn = true;
-		document.getElementById("soundImg").src="textures/soundOn.png";
-	}
 }
