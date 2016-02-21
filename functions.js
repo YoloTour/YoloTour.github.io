@@ -332,64 +332,7 @@ function loadBasics(){
 			scene.add(sunGroup);
 			clickableObjects.push(sunSphere	); //btn1Mesh
 
-			// BUTTON 1
-			var box1Geometry = new THREE.CubeGeometry( 5,0.5,5 );
-			var box1Material = new THREE.MeshPhongMaterial({map: textureLoader.load("textures/button.png")});
-			box1Material.color = new THREE.Color("rgb(150, 150, 150)");
-			var box1Mesh = new THREE.Mesh( box1Geometry, box1Material );
-			btn1.add(box1Mesh);
-
-			var btn1Geometry = new THREE.CylinderGeometry( 0.8, 0.8, 0.5, 32 );
-			var btn1Material = new THREE.MeshPhongMaterial();
-			btn1Material.color = new THREE.Color("rgb(170, 0, 0)");
-			btn1Mesh = new THREE.Mesh( btn1Geometry, btn1Material );
-			btn1Mesh.translateY(-0.3);
-			btn1.add(btn1Mesh);
-
-			btn1.translateY(4.8);
-			btn1.scale.x = 0.15;
-			btn1.scale.y = 0.15;
-			btn1.scale.z = 0.15;
-
-			// BUTTON 2
-			var box2Geometry = new THREE.CubeGeometry( 10,1,6 );
-			var box2Material = new THREE.MeshPhongMaterial({map: textureLoader.load("textures/button2.jpg")});
-			box2Material.color = new THREE.Color("rgb(150, 150, 150)");
-			var box2Mesh = new THREE.Mesh( box2Geometry, box2Material );
-			btn2.add(box2Mesh);
-
-			var btn2Geometry = new THREE.CylinderGeometry( 0.8, 0.8, 0.5, 32 );
-			var btn2Material = new THREE.MeshPhongMaterial();
-			btn2Material.color = new THREE.Color("rgb(180, 160, 100)");
-			btn2Mesh = new THREE.Mesh( btn2Geometry, btn2Material );
-			btn2Mesh.translateY(0.8);
-			btn2Mesh.translateX(-4);
-			btn2Mesh.translateZ(-0.8);
-			btn2.add(btn2Mesh);
-
-			btn2.translateZ(-4.15);
-			btn2.translateX(-2);
-			btn2.translateY(-1.0);
-			btn2.scale.x = 0.15;
-			btn2.scale.y = 0.15;
-			btn2.scale.z = 0.15;
-			btn2.rotation.x = Math.PI/2;
-			btn2.rotation.z = -0.5;
-
-			// BUTTON 2
-			var btn3Geometry = new THREE.CubeGeometry( 1.5,1.5,4 );
-			var btn3Material = new THREE.MeshPhongMaterial({map: textureLoader.load("textures/rainbow.png"), transparent: true, opacity: 0.0});
-			btn3Material.color = new THREE.Color("rgb(150, 150, 150)");
-			btn3Mesh = new THREE.Mesh( btn3Geometry, btn3Material );
-			btn3.add(btn3Mesh);
-
-
-	
-
-			//ADD LINEGROUP
-			lineGroup = new THREE.Object3D;
-			addMarker();
-			sunSphere.add(lineGroup);
+			
 
 
 
@@ -487,6 +430,65 @@ function loadBasics(){
 			path = new THREE.Mesh( pathGeometry, pathMaterial );
 
 			path.rotation.x = Math.PI/2; 
+
+			// BUTTON 1
+			var box1Geometry = new THREE.CubeGeometry( 5,0.5,5 );
+			var box1Material = new THREE.MeshPhongMaterial({map: textureLoader.load("textures/button.png")});
+			box1Material.color = new THREE.Color("rgb(150, 150, 150)");
+			var box1Mesh = new THREE.Mesh( box1Geometry, box1Material );
+			btn1.add(box1Mesh);
+
+			var btn1Geometry = new THREE.CylinderGeometry( 0.8, 0.8, 0.5, 32 );
+			var btn1Material = new THREE.MeshPhongMaterial();
+			btn1Material.color = new THREE.Color("rgb(170, 0, 0)");
+			btn1Mesh = new THREE.Mesh( btn1Geometry, btn1Material );
+			btn1Mesh.translateY(-0.3);
+			btn1.add(btn1Mesh);
+
+			btn1.translateY(4.8);
+			btn1.scale.x = 0.15;
+			btn1.scale.y = 0.15;
+			btn1.scale.z = 0.15;
+
+			// BUTTON 2
+			var box2Geometry = new THREE.CubeGeometry( 10,1,6 );
+			var box2Material = new THREE.MeshPhongMaterial({map: textureLoader.load("textures/button2.jpg")});
+			box2Material.color = new THREE.Color("rgb(150, 150, 150)");
+			var box2Mesh = new THREE.Mesh( box2Geometry, box2Material );
+			btn2.add(box2Mesh);
+
+			var btn2Geometry = new THREE.CylinderGeometry( 0.8, 0.8, 0.5, 32 );
+			var btn2Material = new THREE.MeshPhongMaterial();
+			btn2Material.color = new THREE.Color("rgb(180, 160, 100)");
+			btn2Mesh = new THREE.Mesh( btn2Geometry, btn2Material );
+			btn2Mesh.translateY(0.8);
+			btn2Mesh.translateX(-4);
+			btn2Mesh.translateZ(-0.8);
+			btn2.add(btn2Mesh);
+
+			btn2.translateZ(-4.15);
+			btn2.translateX(-2);
+			btn2.translateY(-1.0);
+			btn2.scale.x = 0.15;
+			btn2.scale.y = 0.15;
+			btn2.scale.z = 0.15;
+			btn2.rotation.x = Math.PI/2;
+			btn2.rotation.z = -0.5;
+
+			// BUTTON 2
+			var btn3Geometry = new THREE.CubeGeometry( 1.5,1.5,4 );
+			var btn3Material = new THREE.MeshPhongMaterial({map: textureLoader.load("textures/rainbow.png"), transparent: true, opacity: 0.0});
+			btn3Material.color = new THREE.Color("rgb(150, 150, 150)");
+			btn3Mesh = new THREE.Mesh( btn3Geometry, btn3Material );
+			btn3.add(btn3Mesh);
+
+
+	
+
+			//ADD LINEGROUP
+			lineGroup = new THREE.Object3D;
+			addMarker();
+			sunSphere.add(lineGroup);
 			
 			addResenarer();
 			//sceneGraph.add(path);
