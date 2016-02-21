@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title> YoloTour </title>
+		<title> Yolo Tour </title>
 		<meta charset="utf-8">
 		<link rel="icon" href="favicon2.ico" type="image/x-icon" />
 		<link rel="stylesheet" href="css/style.css">
@@ -306,6 +306,7 @@ void main() {
 			sceneGraph = new THREE.Object3D;
 			nightSky = new THREE.Object3D;
 			daySky = new THREE.Object3D;
+			resenarer = [];
 			btn1 = new THREE.Object3D;
 			btn2 = new THREE.Object3D;
 			btn3 = new THREE.Object3D;
@@ -373,7 +374,7 @@ void main() {
 			}
 			toggleDayNight();
 
-
+			var nu = time = Date.now() / 1000;
 			animate();
 
 			function animate() {
@@ -385,6 +386,10 @@ void main() {
 				sunSphere.rotation.y = time/50;
 				cloudGroup.rotation.y = -time/100;
 				cloudGroup.rotation.x = -time/60;
+
+				for(var i = 0; i < resenarer.length; i++){
+					resenarer[i].rotation.y = (1+i)*(time-nu)/50;
+				}
 
 
 				busGroup.rotation.y =time/10;

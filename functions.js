@@ -488,7 +488,7 @@ function loadBasics(){
 
 			path.rotation.x = Math.PI/2; 
 			
-
+			addResenarer();
 			//sceneGraph.add(path);
 }
 
@@ -564,4 +564,25 @@ function markTextfield() {
 
 function distance(first, second) {
 	return Math.pow((Math.pow(Math.abs(first.x - second.x),3) + Math.pow(Math.abs(first.y - second.y),3) + Math.pow(Math.abs(first.z - second.z),3)),1/3);
+}
+
+function addResenarer() {
+	var map, material, sprite;
+	
+	for(var i = 1; i < 20; i++){
+
+		map = THREE.ImageUtils.loadTexture( "resenarer/" + String(i) + ".jpg" );
+	    material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
+	    sprite = new THREE.Sprite( material );
+		sprite.translateY(i/50);
+		sprite.translateX(5 + i/2);
+	    sprite.visible = true;
+	    resenar = new THREE.Object3D;
+	    resenar.add( sprite );
+	    sceneGraph.add(resenar);
+	    resenarer.push(resenar);
+
+	    resenar.rotation.z = i/10;
+
+	}   
 }
