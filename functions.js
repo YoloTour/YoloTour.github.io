@@ -571,9 +571,9 @@ function distance(first, second) {
 function addResenarer() {
 	var map, material, sprite;
 	
-	for(var i = 1; i < 20; i++){
+	for(var i = 1; i < 33; i++){
 
-		map = THREE.ImageUtils.loadTexture( "resenarer/" + String(i) + ".jpg" );
+		map = THREE.ImageUtils.loadTexture( "resenarer/" + String(i) + ".png" );
 	    material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
 	    sprite = new THREE.Sprite( material );
 		sprite.translateY(i/50);
