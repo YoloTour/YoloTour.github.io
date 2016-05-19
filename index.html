@@ -48,6 +48,17 @@
 			<img id="cloud_img" src="textures/cloud_white.png">
 		</div>
 
+		<div id="kondomkungen_div"> Touren sponsras av: </div>
+		<img id="kondomkungen_img" src="kondomkungen-horizontal-tagline.png">
+		<script>
+			$(document).ready( function() {
+				$('#kondomkungen_img').click(function(){
+			        var audio = document.createElement("audio");
+					audio.src = "Kondomkungen 15s.wav";  
+					audio.play();
+				});
+			});
+		</script>
 
 
 	
