@@ -289,7 +289,7 @@ void main() {
 			//Renderer
 			renderer = new THREE.WebGLRenderer({ antialiasing: true });
 
-			renderer.setClearColor ( 0xB3EAFF, 1 );
+			renderer.setClearColor ( 0xB3EAFF , 1 );
 
 			kissemusic.play();
 			renderer.setSize( window.innerWidth, window.innerHeight );
@@ -396,6 +396,7 @@ void main() {
 			function animate() {
 				scene.updateMatrixWorld();
 				time = Date.now() / 100;
+				renderer.setClearColor ( 0xB3EAFF , 1 * Math.sin(time * 0.1));
 
 				fire_material.uniforms[ 'time' ].value = .00008 * ( Date.now() - start );
 				fire_material2.uniforms[ 'time' ].value = .00015 * ( Date.now() - start );
