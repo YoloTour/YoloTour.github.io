@@ -18,26 +18,27 @@
 		<script src="js/OrbitControls.js"></script>
 		<script src="js/Detector.js"></script>
 		<script src="js/Projector.js"></script>
-		
+
 		<script src="js/MTLLoader.js"></script>
 		<script src="js/DDSLoader.js"></script>
 		<script src="js/OBJMTLLoader.js"></script>
 		<script src="js/OBJLoader.js"></script>
-		
+
 		<!-- clock -->
 		<script src="js/flipclock.js"></script>
 		<script src="eventListeners.js"></script>
-		
+
 
 		<!--Egna script-->
 		<script src="functions.js"></script>
-		
+
 		<button id="genTour_btn" onclick="drawRoute()">Generera Tour</button>
-		<form id="textfield"> Antal dagar:<input type="text" onclick="markTextfield()" id="antaldagar" value="10" 
+		<form id="textfield"> Antal dagar:<input type="text" onclick="markTextfield()" id="antaldagar" value="10"
 			onkeydown="if (event.keyCode == 13) { event.preventDefault(); drawRoute(); }" ></form>
 		<button id="hideTour_btn" onclick="hideRoute()">Dölj Tour</button>
 
 		<audio id="sound"><source src="hatkarlek.mp3" type="audio/mpeg"></audio>
+		<audio id="kissemusic"><source src="kissepaus.mp3" type="audio/mpeg"></audio>
 		<audio id="busSound1"><source src="busSound1.mp3" type="audio/mpeg"></audio>
 		<audio id="busSound2"><source src="busSound2.mp3" type="audio/mpeg"></audio>
 		<audio id="busSound1"><source src="busSound3.mp3" type="audio/mpeg"></audio>
@@ -54,7 +55,7 @@
 			$(document).ready( function() {
 				$('#kondomkungen_img').click(function(){
 			        var audio = document.createElement("audio");
-					audio.src = "Kondomkungen 15s.wav";  
+					audio.src = "Kondomkungen 15s.wav";
 					audio.play();
 				});
 			});
@@ -64,7 +65,7 @@
 		<a href="http://www.absoluttorr.se/" target="_blank"><img id="absolut_torr_img" src="absolut_torr.png"></a>
 
 
-	
+
 
 		<!--NEW SHADERS-->
     <script type="x-shader/x-vertex" id="vertexShader">
@@ -92,7 +93,7 @@
 		  return t*t*t*(t*(t*6.0-15.0)+10.0);
 		}
 
-		
+
 
 		// Classic Perlin noise, periodic variant
 		float pnoise(vec3 P, vec3 rep)
@@ -160,12 +161,12 @@
 		  vec3 fade_xyz = fade(Pf0);
 		  vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
 		  vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
-		  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
+		  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
 		  return 2.2 * n_xyz;
 		}
 
 		// Include the Ashima code here!
-		 
+
 		varying vec2 vUv;
 		varying float noise;
 		uniform float time;
@@ -188,14 +189,14 @@
 		    noise = 7.0 *  -.40 * turbulence( .5 * normal + time );
 		    float b = 1.0 * pnoise( 0.05 * position + vec3( 1.0 * time ), vec3( 100.0 ) );
 		    float displacement = - noise + b;
-		    
+
 
 		    vec3 newPosition = position + normal * displacement;
 		    gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 
 
 
-		}		
+		}
     </script>
 
     <script type="x-shader/x-vertex" id="fragmentShader">
@@ -260,8 +261,8 @@ void main() {
 
 			var clickableObjects = [];
 			// click functionality
-			var raycaster = new THREE.Raycaster();		
-			var intersects = raycaster.intersectObjects( clickableObjects );	
+			var raycaster = new THREE.Raycaster();
+			var intersects = raycaster.intersectObjects( clickableObjects );
 			var mouse = new THREE.Vector2();
 			var clickPajala;
 			var clickAirplane;
@@ -277,10 +278,11 @@ void main() {
 			var btn2Mesh;
 			var btn3Mesh;
 
-			var gomorron = document.getElementById("sound"); 
-			var busSound1 = document.getElementById("busSound1"); 
-			var busSound2 = document.getElementById("busSound2"); 
-			var busSound3 = document.getElementById("busSound3"); 
+			var gomorron = document.getElementById("sound");
+			var kissemusic = document.getElementById("kissemusic");
+			var busSound1 = document.getElementById("busSound1");
+			var busSound2 = document.getElementById("busSound2");
+			var busSound3 = document.getElementById("busSound3");
 			var gomorronPlay = false;
 			var soundDice;
 
@@ -288,8 +290,8 @@ void main() {
 			renderer = new THREE.WebGLRenderer({ antialiasing: true });
 
 			renderer.setClearColor ( 0xB3EAFF, 1 );
-	
 
+			kissemusic.play();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
@@ -324,12 +326,12 @@ void main() {
 			btn1 = new THREE.Object3D;
 			btn2 = new THREE.Object3D;
 			btn3 = new THREE.Object3D;
-			
-			
+
+
 			//Loading Meshes
 			loadModels();
 			loadBasics();
-			
+
 			//Loading Sprites
 			loadClouds();
 			loadStars();
@@ -368,7 +370,7 @@ void main() {
 			//All rotation med Date-time
 			//Kunna ta bort genererad tour
 
-			
+
 
 			window.addEventListener( 'resize', onWindowResize, false );
 			window.addEventListener('mousedown',onDocumentMouseDown,true);
@@ -393,7 +395,7 @@ void main() {
 
 			function animate() {
 				scene.updateMatrixWorld();
-				time = Date.now() / 1000;
+				time = Date.now() / 100;
 
 				fire_material.uniforms[ 'time' ].value = .00008 * ( Date.now() - start );
 				fire_material2.uniforms[ 'time' ].value = .00015 * ( Date.now() - start );
@@ -412,7 +414,7 @@ void main() {
 
 				pajalaGroup.rotation.y = -time/7;
 				pajalaPortGroup.rotation.y = -time*2;
-		
+
 				if(!day) {
 					setCloudOpacity();
 				}
@@ -422,8 +424,8 @@ void main() {
 
 				daFire.translateX(0.001*Math.sin(5*time));
 				daFire.translateY(0.001*Math.sin(7*time));
-				daFire.translateZ(0.001*Math.sin(time));				
-				
+				daFire.translateZ(0.001*Math.sin(time));
+
 				//pointLight.position.copy( mesh.matrixWorld.getPosition() );
 				pointLight.position.setFromMatrixPosition( mesh.matrixWorld );
 				//Vector3.setFromMatrixPosition( matrix )
@@ -438,11 +440,11 @@ void main() {
 				controls.update();
 				renderer.render( scene, camera );
 			}
-	
+
 
 		</script>
 
-		
+
 
 	</body>
 
